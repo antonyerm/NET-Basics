@@ -10,11 +10,19 @@ using System.Windows.Forms;
 
 namespace Task1_2_WinForms
 {
-    public partial class Form1 : Form
+    public partial class FormInput : Form
     {
-        public Form1()
+        public string userName;
+        public FormInput()
         {
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            userName = textBoxName.Text;
+            var outputForm = new FormOutput();
+            outputForm.Show();
         }
     }
 }

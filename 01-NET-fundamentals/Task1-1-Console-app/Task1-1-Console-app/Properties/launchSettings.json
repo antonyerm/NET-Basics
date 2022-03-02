@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Task1-1-Console-app": {
+      "commandName": "Project",
+      "commandLineArgs": "Anton"
+    }
+  }
+}

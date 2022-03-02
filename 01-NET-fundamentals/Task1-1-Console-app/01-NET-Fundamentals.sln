@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32126.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task1-1-Console-app", "Task1-1-Console-app\Task1-1-Console-app.csproj", "{5F5A5921-5995-4AA0-86DB-C72AF4FAEE29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Task1-1-Console-app", "Task1-1-Console-app\Task1-1-Console-app.csproj", "{5F5A5921-5995-4AA0-86DB-C72AF4FAEE29}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task1-2-WinForms", "Task1-2-WinForms\Task1-2-WinForms.csproj", "{2371E3C0-EA06-4E61-8E58-32B7B214DB30}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task1-3-WPF", "Task1-3-WPF\Task1-3-WPF.csproj", "{C1C1A059-D962-4FFF-9A5B-3DC2777E2D7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task2-Class-library", "Task2-Class-library\Task2-Class-library.csproj", "{9A5C1BE1-AAB0-4DFA-8F19-146A1EB0784C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{C1C1A059-D962-4FFF-9A5B-3DC2777E2D7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1C1A059-D962-4FFF-9A5B-3DC2777E2D7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1C1A059-D962-4FFF-9A5B-3DC2777E2D7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A5C1BE1-AAB0-4DFA-8F19-146A1EB0784C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A5C1BE1-AAB0-4DFA-8F19-146A1EB0784C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A5C1BE1-AAB0-4DFA-8F19-146A1EB0784C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A5C1BE1-AAB0-4DFA-8F19-146A1EB0784C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -18,11 +18,18 @@ namespace Task1_3_WPF
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class InputWindow : Window
     {
-        public MainWindow()
+        public InputWindow()
         {
             InitializeComponent();
+        }
+
+        private void buttonOK_Click(object sender, RoutedEventArgs e)
+        {
+            DataInterface.userName = textBoxName.Text;
+            var outputWindow = new OutputWindow();
+            outputWindow.Show();
         }
     }
 }

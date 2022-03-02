@@ -8,6 +8,8 @@ namespace Task1_2_WinForms
 {
     static class Program
     {
+        public static FormInput formInput;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -16,7 +18,8 @@ namespace Task1_2_WinForms
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            formInput = new FormInput();
+            Application.Run(formInput);
         }
     }
 }
