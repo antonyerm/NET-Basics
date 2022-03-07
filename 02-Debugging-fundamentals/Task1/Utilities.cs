@@ -10,16 +10,21 @@ namespace Task1
         /// <param name="numbers">Numbers to sort.</param>
         public static void Sort(int[] numbers)
         {
+            if (numbers == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             int temp;
             for (int i = 0; i < numbers.Length; i++)
             {
                 for (int j = i; j < numbers.Length; j++)
                 {
-                    if (numbers[i] < numbers[j])
+                    if (numbers[j] < numbers[i])
                     {
-                        temp = numbers[i];
-                        numbers[i] = temp;
+                        temp = numbers[j];
                         numbers[j] = numbers[i];
+                        numbers[i] = temp;
                     }
                 }
             }
