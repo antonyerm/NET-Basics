@@ -16,6 +16,9 @@ namespace Task_1_FileSystemVisitor
     class Lister
     {
         private OutputGenerator _output;
+        /// <summary>
+        /// Predefined starting folder inside which a file tree will be traversed.
+        /// </summary>
         private readonly string startingFolder = @"C:\1";
 
         /// <summary>

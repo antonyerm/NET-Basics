@@ -17,3 +17,6 @@ Provides a library class and a method for generating greeting message. The libar
 A class with Sort and IndexOf methods with issues that need to be solved.
 #### Task1.Tests
 Tests for Sort and IndexOf methods.
+### 03-Advanced-C-sharp
+#### Task1
+A class which searches file folders starting with a predefined one.Uses events to mark different found conditions. This task implements both Task1 and Task2 of the homework. 
