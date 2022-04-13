@@ -20,3 +20,10 @@ Tests for Sort and IndexOf methods.
 ### 03-Advanced-C-sharp
 #### Task1
 A class which searches file folders starting with a predefined one.Uses events to mark different found conditions. This task implements both Task1 and Task2 of the homework. 
+### 04-Exception-Handling
+Tasks 1, 2, 3
+### 05-Reflection
+#### Task1
+Use two configuration providers to store application settings. Select the provider by attribute on setting.
+#### Task2
+Use two configuration providers to store application settings. Select the provider by attribute on setting. Implement providers' operations (save and load) for the two providers in separate plugins.
