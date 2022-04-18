@@ -27,3 +27,8 @@ Tasks 1, 2, 3
 Use two configuration providers to store application settings. Select the provider by attribute on setting.
 #### Task2
 Use two configuration providers to store application settings. Select the provider by attribute on setting. Implement providers' operations (save and load) for the two providers in separate plugins.
+### 06-DataStructures
+#### Task1
+Implement linked list (DoublyLinkedList.cs) with specified functions.
+#### Task2
+Implement interface IHybridFlowProcessor<T> (HybridFlowProcessor.cs) using single internal "storage" for both FILO and FIFO flows.
