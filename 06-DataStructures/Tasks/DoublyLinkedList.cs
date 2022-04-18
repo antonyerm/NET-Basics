@@ -31,8 +31,18 @@ namespace Tasks
 
         public void AddAt(int index, T e)
         {
-            // Add first.
             var newNode = new Node<T>(e);
+
+            // If list is empty.
+            if (_head == null)
+            {
+                _head = newNode;
+                _tail = _head;
+                Length++;
+                return;
+            }
+
+            // Add first.
             if (index == 0)
             {
                 newNode.Next = _head;
@@ -65,7 +75,6 @@ namespace Tasks
             {
                 throw new IndexOutOfRangeException();
             }
-
             
             newNode.Next = current;
             newNode.Previous = current.Previous;
