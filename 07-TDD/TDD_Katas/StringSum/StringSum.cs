@@ -11,7 +11,10 @@ namespace StringSum
                 throw new ArgumentException();
             }
 
-            return 0;
+            var number1 = Int32.Parse(num1);
+            var number2 = Int32.Parse(num2);
+
+            return number1 + number2;
         }
     }
 }
