@@ -11,12 +11,12 @@ namespace StringSum
                 throw new ArgumentException();
             }
 
-            if (!int.TryParse(num1, out int number1))
+            if (!uint.TryParse(num1, out uint number1))
             {
                 number1 = 0;
             }
 
-            if (!int.TryParse(num2, out int number2))
+            if (!uint.TryParse(num2, out uint number2))
             {
                 number2 = 0;
             }

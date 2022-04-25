@@ -57,5 +57,21 @@ namespace StringSum
             Assert.That(expected == actual);
         }
 
+        [Test]
+        [TestCase("5.5","-1","0")]
+        [TestCase("-5", "-3", "0")]
+        [TestCase("10.5", "114.3", "0")]
+        public void Sum_DifferentNotNaturalNumbers_ReturnsZero(string num1, string num2, string expected)
+        {
+            //arrange
+            var stringSum = new StringSum();
+
+            //act
+            var actual = stringSum.Sum(num1, num2);
+
+            //assert
+            Assert.That(expected == actual);
+        }
+
     }
 }
