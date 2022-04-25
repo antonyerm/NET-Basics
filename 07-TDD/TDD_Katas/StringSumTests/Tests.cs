@@ -32,7 +32,7 @@ namespace StringSum
             var num1 = "5";
             var num2 = "1";
             var stringSum = new StringSum();
-            var expected = 6;
+            var expected = "6";
 
             //act
             var actual = stringSum.Sum(num1, num2);
@@ -48,7 +48,7 @@ namespace StringSum
             var num1 = "5";
             var num2 = "abc";
             var stringSum = new StringSum();
-            var expected = 5;
+            var expected = "5";
 
             //act
             var actual = stringSum.Sum(num1, num2);
