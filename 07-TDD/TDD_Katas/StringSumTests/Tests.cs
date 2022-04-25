@@ -41,5 +41,21 @@ namespace StringSum
             Assert.That(expected == actual);
         }
 
+        [Test]
+        public void Sum_NotANumberAndNaturalNumber_ReturnsSecondNumber()
+        {
+            //arrange
+            var num1 = "5";
+            var num2 = "abc";
+            var stringSum = new StringSum();
+            var expected = 5;
+
+            //act
+            var actual = stringSum.Sum(num1, num2);
+
+            //assert
+            Assert.That(expected == actual);
+        }
+
     }
 }
