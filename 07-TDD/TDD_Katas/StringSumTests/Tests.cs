@@ -1,13 +1,20 @@
 using NUnit.Framework;
+using System;
 
 namespace StringSum
 {
     public class Tests
     {
         [Test]
-        public void Test1()
+        public void Sum_EmptyStrings_ThrowsException()
         {
-            Assert.Pass();
+            //arrange
+            var num1 = string.Empty;
+            var num2 = string.Empty;
+            var stringSum = new StringSum();
+
+            //act & assert
+            Assert.Throws<ArgumentException>(() => { stringSum.Sum(num1, num2); });
         }
     }
 }
