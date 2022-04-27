@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LeapYear
+namespace LeapYearKata
 {
     public class LeapYear
     {
