@@ -23,13 +23,25 @@ namespace LeapYearKata
         {
             //arrange
             var yearChecker = new LeapYear();
-            var expected = false;
 
             //act
             var actual = yearChecker.IsLeapYear(5);
 
             //assert
-            Assert.That(expected == actual);
+            Assert.IsFalse(actual);
+        }
+
+        [Test]
+        public void LeapYear_DivisibleBy4AndNonDivisibleBy100AndNonDivisibleBy400_ReturnsTrue()
+        {
+            //arrange
+            var yearChecker = new LeapYear();
+
+            //act
+            var actual = yearChecker.IsLeapYear(1900);
+
+            //assert
+            Assert.IsTrue(actual);
         }
     }
 }
