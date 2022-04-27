@@ -38,7 +38,7 @@ namespace LeapYearKata
             var yearChecker = new LeapYear();
 
             //act
-            var actual = yearChecker.IsLeapYear(1900);
+            var actual = yearChecker.IsLeapYear(1996);
 
             //assert
             Assert.IsTrue(actual);

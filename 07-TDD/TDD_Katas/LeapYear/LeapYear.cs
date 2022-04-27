@@ -6,10 +6,10 @@ namespace LeapYearKata
     {
         public bool IsLeapYear(int number)
         {
-            bool result = default;
-            if (number % 4 != 0)
+            bool result = false;
+            if ((number % 4 == 0) && ((number % 100 != 0) || (number % 400 == 0)) )
             {
-                result = false;
+                result = true;
             }
 
             return result;
