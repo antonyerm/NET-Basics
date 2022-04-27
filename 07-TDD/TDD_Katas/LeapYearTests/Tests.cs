@@ -29,9 +29,7 @@ namespace LeapYearKata
             var actual = yearChecker.IsLeapYear(5);
 
             //assert
-            Assert.That(expected = actual);
-
-            Assert.Pass();
+            Assert.That(expected == actual);
         }
     }
 }
