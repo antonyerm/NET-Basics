@@ -11,3 +11,14 @@
 )
 
 GO
+
+CREATE TRIGGER [dbo].[Trigger_EmployeeOnInsert]
+    ON [dbo].[Employee]
+    FOR INSERT
+    AS
+    BEGIN
+        SET NoCount ON;
+        IF NOT EXISTS (SELECT * FROM [Company] WHERE [Company].[Name] = [inserted].[CompanyName])
+            INSERT INTO [Company] ([Name], [AddressId])
+            VALUES ([inserted].[CompanyName], [inserted].[AddressId])
+    END;
