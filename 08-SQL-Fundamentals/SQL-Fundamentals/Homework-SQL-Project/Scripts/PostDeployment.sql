@@ -34,6 +34,6 @@ BEGIN
     INSERT INTO [Employee] ([PersonId], [AddressId], [EmployeeName], [Position], [CompanyName])
     VALUES (1,1,'John','Songwriter','The Beatles'),
            (2,1,'Paul','Songwriter','The Beatles'),
-           (3,2,'Jim','Singer','The Doors'),
-           (4,3,'Robby','Guitar player','The Doors')
+           (3,2,NULL,'Singer','The Doors'),
+           (4,3,NULL,'Guitar player','The Doors')
 END;
