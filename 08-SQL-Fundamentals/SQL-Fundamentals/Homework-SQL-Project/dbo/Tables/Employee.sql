@@ -18,13 +18,9 @@ CREATE TRIGGER [dbo].[Trigger_EmployeeOnInsert]
     AS
     BEGIN
         SET NoCount ON;
-        -- Do insert if there are no the same rows already.
-        IF NOT EXISTS (SELECT * FROM [Company] c
-                       INNER JOIN [inserted] i ON c.[Name] = i.[CompanyName]) AND c.[AddressId] = i.[AddressId]
-        BEGIN
-            -- Insert values into Company from rows of Inserted which do not already exist in Company.
-            INSERT INTO [Company] ([Name], [AddressId])
-            SELECT [CompanyName], [AddressId] FROM [inserted] i
-            INNER JOIN [Company] c ON NOT (c.[Name] = i.[CompanyName] AND c.[AddressId] = i.[AddressId])
-        END;
+        -- Insert values into Company from rows of Inserted which do not already exist in Company.
+        INSERT INTO [Company] ([Name], [AddressId])
+        SELECT i.[CompanyName], i.[AddressId] FROM [inserted] i
+        WHERE NOT EXISTS (SELECT * FROM [Company] c 
+                          WHERE c.[Name] = i.[CompanyName] AND c.[AddressId] = i.[AddressId])
     END;
