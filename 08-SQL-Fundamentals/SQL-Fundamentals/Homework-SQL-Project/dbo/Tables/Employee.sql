@@ -14,11 +14,17 @@ GO
 
 CREATE TRIGGER [dbo].[Trigger_EmployeeOnInsert]
     ON [dbo].[Employee]
-    FOR INSERT
+    AFTER INSERT
     AS
     BEGIN
         SET NoCount ON;
-        IF NOT EXISTS (SELECT * FROM [Company] WHERE [Company].[Name] = [inserted].[CompanyName])
+        -- Do insert if there are no the same rows already.
+        IF NOT EXISTS (SELECT * FROM [Company] c
+                       INNER JOIN [inserted] i ON c.[Name] = i.[CompanyName]) AND c.[AddressId] = i.[AddressId]
+        BEGIN
+            -- Insert values into Company from rows of Inserted which do not already exist in Company.
             INSERT INTO [Company] ([Name], [AddressId])
-            VALUES ([inserted].[CompanyName], [inserted].[AddressId])
+            SELECT [CompanyName], [AddressId] FROM [inserted] i
+            INNER JOIN [Company] c ON NOT (c.[Name] = i.[CompanyName] AND c.[AddressId] = i.[AddressId])
+        END;
     END;
