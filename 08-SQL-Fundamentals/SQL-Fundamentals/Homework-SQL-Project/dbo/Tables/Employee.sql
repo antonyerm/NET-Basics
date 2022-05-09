@@ -20,7 +20,7 @@ CREATE TRIGGER [dbo].[Trigger_EmployeeOnInsert]
         SET NoCount ON;
         -- Insert values into Company from rows of Inserted which do not already exist in Company.
         INSERT INTO [Company] ([Name], [AddressId])
-        SELECT i.[CompanyName], i.[AddressId] FROM [inserted] i
+        SELECT DISTINCT i.[CompanyName], i.[AddressId] FROM [inserted] i
         WHERE NOT EXISTS (SELECT * FROM [Company] c 
                           WHERE c.[Name] = i.[CompanyName] AND c.[AddressId] = i.[AddressId])
     END;
