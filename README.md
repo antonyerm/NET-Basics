@@ -32,3 +32,6 @@ Use two configuration providers to store application settings. Select the provid
 Implement linked list (DoublyLinkedList.cs) with specified functions.
 #### Task2
 Implement interface IHybridFlowProcessor<T> (HybridFlowProcessor.cs) using single internal "storage" for both FILO and FIFO flows.
+### 07-Unit testing
+### 08-SQL Fundamentals
+Create SQL project, in which create a table, add FK constraints, a view, a stored procedure and a trigger.
