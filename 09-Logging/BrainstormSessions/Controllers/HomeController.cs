@@ -6,12 +6,15 @@ using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.Core.Model;
 using BrainstormSessions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace BrainstormSessions.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IBrainstormSessionRepository _sessionRepository;
+        private readonly Serilog.ILogger _logger = Log.Logger;
 
         public HomeController(IBrainstormSessionRepository sessionRepository)
         {
@@ -30,6 +33,8 @@ namespace BrainstormSessions.Controllers
                 IdeaCount = session.Ideas.Count
             });
 
+            _logger.Information("Test log entry of Information level.");
+
             return View(model);
         }
 
@@ -44,6 +49,7 @@ namespace BrainstormSessions.Controllers
         {
             if (!ModelState.IsValid)
             {
+                _logger.Warning("Test log entry of Warning type.");
                 return BadRequest(ModelState);
             }
             else
