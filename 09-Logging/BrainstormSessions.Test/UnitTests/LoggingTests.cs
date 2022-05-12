@@ -6,27 +6,21 @@ using BrainstormSessions.Api;
 using BrainstormSessions.Controllers;
 using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.Core.Model;
-using log4net.Appender;
-using log4net.Config;
-using log4net.Core;
 using Moq;
+using Serilog;
+using Serilog.Sinks.TestCorrelator;
 using Xunit;
 
 namespace BrainstormSessions.Test.UnitTests
 {
-    public class LoggingTests : IDisposable
+    public class LoggingTests
     {
-        private readonly MemoryAppender _appender;
-
         public LoggingTests()
         {
-            _appender = new MemoryAppender();
-            BasicConfigurator.Configure(_appender);
-        }
-
-        public void Dispose()
-        {
-            _appender.Clear();
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.TestCorrelator()
+                .CreateLogger();
         }
 
         [Fact]
@@ -35,15 +29,17 @@ namespace BrainstormSessions.Test.UnitTests
             // Arrange
             var mockRepo = new Mock<IBrainstormSessionRepository>();
             mockRepo.Setup(repo => repo.ListAsync())
-                .ReturnsAsync(GetTestSessions());
+            .ReturnsAsync(GetTestSessions());
             var controller = new HomeController(mockRepo.Object);
 
-            // Act
-            var result = await controller.Index();
-
-            // Assert
-            var logEntries = _appender.GetEvents();
-            Assert.True(logEntries.Any(l => l.Level == Level.Info), "Expected Info messages in the logs");
+            using (TestCorrelator.CreateContext())
+            {
+                // Act
+                var result = await controller.Index();
+                
+                // Assert
+                Assert.Contains(TestCorrelator.GetLogEventsFromCurrentContext(), e => e.Level == Serilog.Events.LogEventLevel.Information);
+            }
         }
 
         [Fact]
@@ -57,12 +53,14 @@ namespace BrainstormSessions.Test.UnitTests
             controller.ModelState.AddModelError("SessionName", "Required");
             var newSession = new HomeController.NewSessionModel();
 
-            // Act
-            var result = await controller.Index(newSession);
+            using (TestCorrelator.CreateContext())
+            {
+                // Act
+                var result = await controller.Index(newSession);
 
-            // Assert
-            var logEntries = _appender.GetEvents();
-            Assert.True(logEntries.Any(l => l.Level == Level.Warn), "Expected Warn messages in the logs");
+                // Assert
+                Assert.Contains(TestCorrelator.GetLogEventsFromCurrentContext(), e => e.Level == Serilog.Events.LogEventLevel.Warning);
+            }
         }
 
         [Fact]
@@ -73,12 +71,14 @@ namespace BrainstormSessions.Test.UnitTests
             var controller = new IdeasController(mockRepo.Object);
             controller.ModelState.AddModelError("error", "some error");
 
-            // Act
-            var result = await controller.CreateActionResult(model: null);
+            using (TestCorrelator.CreateContext())
+            {
+                // Act
+                var result = await controller.CreateActionResult(model: null);
 
-            // Assert
-            var logEntries = _appender.GetEvents();
-            Assert.True(logEntries.Any(l => l.Level == Level.Error), "Expected Error messages in the logs");
+                // Assert
+                Assert.Contains(TestCorrelator.GetLogEventsFromCurrentContext(), e => e.Level == Serilog.Events.LogEventLevel.Error);
+            }
         }
 
         [Fact]
@@ -92,12 +92,15 @@ namespace BrainstormSessions.Test.UnitTests
                     s => s.Id == testSessionId));
             var controller = new SessionController(mockRepo.Object);
 
-            // Act
-            var result = await controller.Index(testSessionId);
+            using (TestCorrelator.CreateContext())
+            {
+                // Act
+                var result = await controller.Index(testSessionId);
 
-            // Assert
-            var logEntries = _appender.GetEvents();
-            Assert.True(logEntries.Count(l => l.Level == Level.Debug) == 2, "Expected 2 Debug messages in the logs");
+                // Assert
+                Assert.True(TestCorrelator.GetLogEventsFromCurrentContext().Count(e => e.Level == Serilog.Events.LogEventLevel.Debug) == 2);
+            }
+
         }
 
         private List<BrainstormSession> GetTestSessions()
