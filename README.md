@@ -35,3 +35,7 @@ Implement interface IHybridFlowProcessor<T> (HybridFlowProcessor.cs) using singl
 ### 07-Unit testing
 ### 08-SQL Fundamentals
 Create SQL project, in which create a table, add FK constraints, a view, a stored procedure and a trigger.
+### 09-Logging
+Add logging to the existing project.
+### 10-Serialization
+Use serialization of simple objects with Binar, XML and JSON serialization (Task 1), using ISerializable (Task 2). Deep clone objects using serialization(Task 3).
