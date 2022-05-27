@@ -39,3 +39,5 @@ Create SQL project, in which create a table, add FK constraints, a view, a store
 Add logging to the existing project.
 ### 10-Serialization
 Use serialization of simple objects with Binar, XML and JSON serialization (Task 1), using ISerializable (Task 2). Deep clone objects using serialization(Task 3).
+### 11-OOP principles
+Implement a file -cabinet software for a library. It can search for document cards by a document number and print out the cards. The design of the app conforms to basic OOP principles.
