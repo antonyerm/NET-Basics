@@ -59,11 +59,13 @@
     <Folder Include="Tables" />
     <Folder Include="PublicationPlaces" />
     <Folder Include="Scripts" />
+    <Folder Include="StoredProcedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Product.sql" />
     <Build Include="Tables\Order.sql" />
     <PostDeploy Include="Scripts\PopulateNew.Script.sql" />
+    <Build Include="StoredProcedures\sp_GetOrdersFiltered.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublicationPlaces\ADONET_TestingDB.publish.xml" />

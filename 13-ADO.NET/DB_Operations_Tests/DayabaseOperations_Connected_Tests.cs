@@ -98,5 +98,32 @@ namespace DB_Operations_Tests
             Assert.IsTrue(isOrderDeleted);
         }
 
+        [Test]
+        public void FetchOrdersFilterBy_StatusProvided_ListOfOrdersWithStatusReturned()
+        {
+            // arrange
+            var status = OrderStatus.Done;
+
+            // act
+            var actual = _dbOperations.FetchOrdersFilterBy(status: status);
+
+            //
+            Assert.Pass();
+        }
+
+        [Test]
+        public void FetchOrdersFilterBy_StatusAndUpdatedMonthProvided_ListOfOrdersWithStatusAndMonthReturned()
+        {
+            // arrange
+            var status = OrderStatus.Done;
+            var updatedMonth = 2;
+
+            // act
+            var actual = _dbOperations.FetchOrdersFilterBy(status: status, updatedMonth: updatedMonth);
+
+            //
+            Assert.Pass();
+        }
+
     }
 }
