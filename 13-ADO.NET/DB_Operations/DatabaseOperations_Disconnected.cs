@@ -74,8 +74,6 @@ namespace DB_Operations
             return adapter;
         }
 
-        
-
         public bool InsertProduct(ProductModel product)
         {
             var productTable = _dataSet.Tables["Product"];
@@ -154,18 +152,52 @@ namespace DB_Operations
             return allProducts;
         }
 
-        public bool DeleteOrdersInBulk()
+        public bool DeleteOrdersInBulk(OrderStatus? status = null, int? createdYear = null, int? updatedMonth = null, int? productId = null)
         {
-            using var ordersAdapter = new SqlDataAdapter("SELECT * FROM [Order]", _connectionString);
-            ordersAdapter.UpdateBatchSize = 30; // batch size
+            var selectCommand = new SqlCommand()
+            {
+                CommandText = "[sp_GetOrdersFiltered]",
+                CommandType = CommandType.StoredProcedure,
+                Connection = Connection
+            };
+            selectCommand.Parameters.AddWithValue("@Status", status.ToString());
+            selectCommand.Parameters.AddWithValue("@CreatedYear", createdYear);
+            selectCommand.Parameters.AddWithValue("@UpdatedMonth", updatedMonth);
+            selectCommand.Parameters.AddWithValue("@ProductId", productId);
+
+            var updateCommand = new SqlCommand()
+            {
+                CommandText = "UPDATE [Order] " +
+                    "SET [Status]=@Status, [CreatedDate]=@CreatedDate, [UpdatedDate]=@UpdatedDate, [ProductId]=@ProductId " +
+                    "WHERE [Id]=@OrderId",
+                CommandType = CommandType.Text,
+                Connection = Connection
+            };
+            updateCommand.Parameters.Add("@Status", SqlDbType.NVarChar, 50, "Status");
+            updateCommand.Parameters.Add("@CreatedDate", SqlDbType.DateTime, 1, "CreatedDate");
+            updateCommand.Parameters.Add("@UpdatedDate", SqlDbType.DateTime, 1, "UpdatedDate");
+            var parameter = updateCommand.Parameters.Add("@OrderId", SqlDbType.Int, 1, "Id");
+            parameter.SourceVersion = DataRowVersion.Original;
+
+            
+            var deleteCommand = new SqlCommand()
+            {
+                CommandText = "DELETE FROM [Order] WHERE [Id] = @OrderId",
+                Connection = Connection,
+                CommandType = CommandType.Text
+            };
+            deleteCommand.Parameters.Add("@OrderId", SqlDbType.Int, 1, "Id");
+
+            using var ordersAdapter = new SqlDataAdapter(selectCommand);
+            ordersAdapter.SelectCommand = selectCommand;
+            ordersAdapter.DeleteCommand = deleteCommand;
+            ordersAdapter.UpdateCommand = updateCommand;
+            ordersAdapter.UpdateBatchSize = 30;
 
             var ordersDataSet = new DataSet();
             ordersAdapter.Fill(ordersDataSet, "Order");
 
-            var cmdBuilder = new SqlCommandBuilder(ordersAdapter);
-            var numberOfDeletedRows = cmdBuilder.GetDeleteCommand();
-
-            foreach(DataRow row in ordersDataSet.Tables["Order"].Rows)
+            foreach (DataRow row in ordersDataSet.Tables["Order"].Rows)
             {
                 row.Delete();
             }

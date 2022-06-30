@@ -118,12 +118,27 @@ namespace DB_Operations_Tests
         }
 
         [Test]
-        public void DeleteOrdersInBulk_ProductTableIsEmpty()
+        public void DeleteOrdersFilterBy_StatusProvided_OrdersWithStatusDeleted()
         {
             // arrange
+            var status = OrderStatus.Done;
 
             // act
-            var actual = _dbOperations.DeleteOrdersInBulk();
+            var actual = _dbOperations.DeleteOrdersInBulk(status: status);
+
+            //
+            Assert.Pass();
+        }
+
+        [Test]
+        public void DeleteOrdersFilterBy_StatusAndUpdatedMonthProvided_OrdersWithStatusAndMonthDeleted()
+        {
+            // arrange
+            var status = OrderStatus.Arrived;
+            var updatedMonth = 2;
+
+            // act
+            var actual = _dbOperations.DeleteOrdersInBulk(status: status, updatedMonth: updatedMonth);
 
             //
             Assert.Pass();
