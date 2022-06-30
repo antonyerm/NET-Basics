@@ -6,7 +6,7 @@ using System;
 namespace DB_Operations_Tests
 {
     [TestFixture]
-    public class Tests
+    public class DatabaseOperations_Connected_Tests
     {
         private string _connectionString;
         private DatabaseOperations_Connected _dbOperations;

@@ -21,9 +21,10 @@ Post-Deployment Script Template
 IF NOT EXISTS (SELECT * FROM [Product])
 BEGIN
     INSERT INTO [Product] ([Name], [Description], [Weight], [Height], [Width], [Length])
-    VALUES ('Book','Usual Order',12.3,23.5,20.0,43.0),
-    ('Flower','Romantic Order',5.5,100.5,10.0,10.0),
-    ('Chocolate','Sweet Order',8.7,2.5,5.0,7.0)
+    VALUES ('Book','Usual Product',12.3,23.5,20.0,43.0),
+    ('Flower','Romantic Product',5.5,100.5,10.0,10.0),
+    ('Chocolate','Sweet Product',8.7,2.5,5.0,7.0),
+    ('Coffe','Morning Product',6.56,2.3,4.5,12.1)
 END;
 
 IF NOT EXISTS (SELECT * FROM [Order])
