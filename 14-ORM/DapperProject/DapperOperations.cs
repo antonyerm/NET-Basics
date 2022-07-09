@@ -34,9 +34,75 @@ namespace DapperProject
             return affectedRows;
         }
 
-        public void InsertOrder(OrderModel order1)
+        public int InsertOrder(OrderModel order)
         {
-            throw new NotImplementedException();
+            var sql = "INSERT INTO [Order] VALUES (@Status, @CreatedDate, @UpdatedDate, @ProductId);";
+            using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            var affectedRows = connection.Execute(sql,
+                new
+                {
+                    Status = order.Status.ToString(),
+                    CreatedDate = order.CreatedDate,
+                    UpdatedDate = order.UpdatedDate,
+                    ProductId = order.ProductId
+                });
+            return affectedRows;
+        }
+
+        public OrderModel ReadOrder(int orderNumber)
+        {
+            var sql = "SELECT * FROM [Order] WHERE [Order].Id = @orderNumber";
+            using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            var obtainedOrder = connection.QuerySingleOrDefault<OrderModel>(sql,
+                new
+                {
+                    orderNumber = orderNumber
+                });
+            return obtainedOrder;
+        }
+
+        public OrderModel UpdateOrderStatus(int orderNumber, OrderStatus newOrderStatus)
+        {
+            var sql = "UPDATE [Order] SET [Order].Status = @Status, [Order].UpdatedDate = @UpdatedDate" +
+                " WHERE [Order].Id = @OrderNumber;";
+            using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            var affectedRows = connection.Execute(sql,
+                new
+                {
+                    Status = newOrderStatus.ToString(),
+                    UpdatedDate = DateTime.Now.Date,
+                    OrderNumber = orderNumber
+                });
+
+            // Read and return the result.
+            OrderModel udpatedOrder = null;
+            if (affectedRows > 0)
+            {
+                udpatedOrder = ReadOrder(orderNumber);
+            }
+
+            return udpatedOrder;
+        }
+
+        public bool DeleteOrder(int orderNumber)
+        {
+            var sql = "DELETE FROM [Order] WHERE [Order].Id = @OrderNumber";
+            using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            var affectedRows = connection.Execute(sql,
+                new
+                {
+                    OrderNumber = orderNumber
+                });
+
+            return affectedRows > 0;
         }
     }
 }
