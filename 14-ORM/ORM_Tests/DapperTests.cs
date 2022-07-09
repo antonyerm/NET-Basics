@@ -3,6 +3,7 @@ using DapperProject.Models;
 using NUnit.Framework;
 using System;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace ORM_Tests
 {
@@ -47,6 +48,14 @@ namespace ORM_Tests
             // delete test
             TestScenario_DeleteOrder_OrderNumberProvided_OrderIsDeleted();
 
+            // fetch all products test
+            TestScenario_FetchAllProducts_AllProductsAreObtained();
+
+            // fetch orders filtered by status
+            TestScenario_FetchOrdersFilteredByStatus_FilteredOrdersAreObtained();
+
+            // bulk delete orders filtered by created date
+            TestScenario_BulkDeleteOrdersFilteredByCreatedYear_FilteredOrdersAreDeleted();
         }
 
         private void TestScenario_InsertProduct_ProductModelProvided_ProductCreated()
@@ -141,6 +150,7 @@ namespace ORM_Tests
             var actualOrder = _dbOperations.ReadOrder(orderNumber);
             var expectedOrder = new OrderModel()
             {
+                Id = 2,
                 CreatedDate = DateTime.Parse("2015-04-06"),
                 UpdatedDate = DateTime.Parse("2015-04-20"),
                 Status = OrderStatus.InProgress,
@@ -159,10 +169,11 @@ namespace ORM_Tests
             var now = DateTime.Now;
             var expectedOrder = new OrderModel()
             {
+                Id = orderNumber,
                 CreatedDate = DateTime.Parse("2015-04-06"),
                 UpdatedDate = new DateTime(now.Year, now.Month, now.Day),
                 Status = newStatus,
-                ProductId = orderNumber
+                ProductId = 2
             };
 
             // act
@@ -180,6 +191,42 @@ namespace ORM_Tests
             // act
             var deleteStatusOK = _dbOperations.DeleteOrder(orderNumber);
             var isOrderDeleted = (deleteStatusOK) && (_dbOperations.ReadOrder(orderNumber) == null);
+
+            // assert
+            Assert.IsTrue(isOrderDeleted);
+        }
+
+        private void TestScenario_FetchAllProducts_AllProductsAreObtained()
+        {
+            // arrange
+
+            // act
+            var allProducts = _dbOperations.FetchAllProducts();
+
+            // assert
+            Assert.IsTrue(allProducts.Count > 1);
+        }
+
+        private void TestScenario_FetchOrdersFilteredByStatus_FilteredOrdersAreObtained()
+        {
+            // arrange
+            var requiredStatus = OrderStatus.NotStarted; // normally this is Order with Id = 1
+
+            // act
+            var filteredOrders = _dbOperations.FetchOrdersFilteredBy(status: requiredStatus);
+
+            // assert
+            Assert.IsTrue(filteredOrders.Any() && filteredOrders.All(o => o.Status == requiredStatus));
+        }
+
+        private void TestScenario_BulkDeleteOrdersFilteredByCreatedYear_FilteredOrdersAreDeleted()
+        {
+            // arrange
+            var createdYear = 2012; // normally this is Order with Id = 1
+
+            // act
+            var deleteStatusOK = _dbOperations.BulkDeleteOrdersFilteredBy(createdYear: createdYear);
+            var isOrderDeleted = !_dbOperations.FetchOrdersFilteredBy(createdYear: createdYear).Any();
 
             // assert
             Assert.IsTrue(isOrderDeleted);

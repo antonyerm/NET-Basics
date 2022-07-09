@@ -1,7 +1,10 @@
 ﻿using Dapper;
 using DapperProject.Models;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
+using Z.Dapper.Plus;
 
 namespace DapperProject
 {
@@ -103,6 +106,54 @@ namespace DapperProject
                 });
 
             return affectedRows > 0;
+        }
+
+        public List<ProductModel> FetchAllProducts()
+        {
+            var sql = "SELECT * FROM [Product]";
+            using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            var allProducts = connection.Query<ProductModel>(sql).ToList();
+            return allProducts;
+        }
+
+        public List<OrderModel> FetchOrdersFilteredBy(OrderStatus? status = null, int? createdYear = null, int? updatedMonth = null, int? productId = null)
+        {
+            var sql = "sp_GetOrdersFilteredBy";
+            using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            var ordersFilteredBy = connection.Query<OrderModel>(sql,
+                new
+                {
+                    Status = status.ToString(),
+                    CreatedYear = createdYear,
+                    UpdatedMonth = updatedMonth,
+                    ProductId = productId
+                },
+                commandType: System.Data.CommandType.StoredProcedure).ToList();
+            return ordersFilteredBy;
+        }
+
+        public bool BulkDeleteOrdersFilteredBy(OrderStatus? status = null, int? createdYear = null, int? updatedMonth = null, int? productId = null)
+        {
+            var sql = "sp_GetOrdersFilteredBy";
+            DapperPlusManager.Entity<OrderModel>().Table("Order").Key("Id");
+            using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            connection.BulkDelete(connection.Query<OrderModel>(sql,
+                new
+                {
+                    Status = status.ToString(),
+                    CreatedYear = createdYear,
+                    UpdatedMonth = updatedMonth,
+                    ProductId = productId
+                },
+                commandType: System.Data.CommandType.StoredProcedure)
+                .ToList());
+            return true;
         }
     }
 }
