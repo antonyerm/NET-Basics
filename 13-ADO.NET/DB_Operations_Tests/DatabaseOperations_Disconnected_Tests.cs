@@ -91,7 +91,7 @@ namespace DB_Operations_Tests
         public void DeleteProduct_ProductNumberProvided_ProductIsDeleted()
         {
             // arrange
-            var productId = 4;
+            var productId = 2;
             if (_dbOperations.ReadProduct(productId) == null)
             {
                 throw new ArgumentException($"Product Id = {productId} is not present in the database and cannot be deleted. Please choose another product Id.");
