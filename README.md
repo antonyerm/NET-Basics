@@ -44,3 +44,7 @@ Implement a file -cabinet software for a library. It can search for document car
 ### 12-LINQ
 ### 13-ADO.NET
 Implement CRUD operations on tables in connected and disconnected mode using ADO.NET.
+### 14-ORM
+Implement CRUD operations and some special DML-commands on tables using Dapper.
+### 14-ORM_EF
+Implement CRUD operations and some special DML-commands on tables using Entity Framework Core.
