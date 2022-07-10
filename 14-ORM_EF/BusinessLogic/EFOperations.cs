@@ -1,6 +1,7 @@
 ﻿using DataBaseAccess;
 using DataBaseAccess.Models;
 using Microsoft.EntityFrameworkCore;
+using Z.EntityFramework.Plus;
 
 namespace BusinessLogic
 {
@@ -82,7 +83,37 @@ namespace BusinessLogic
 
             var affectedRows = dbContext.SaveChanges();
             return affectedRows > 0;
+        }
 
+        public List<ProductModel> FetchAllProducts()
+        {
+            using var dbContext = new HomeworkDBContext(_options);
+            var products = dbContext.Product.ToList();
+            return products;
+        }
+
+        public List<OrderModel> FetchOrdersFilteredBy(OrderStatus? status = null, int? createdYear = null, int? updatedMonth = null, int? productId = null)
+        {
+            using var dbContext = new HomeworkDBContext(_options);
+            var orders = dbContext.Order.Where(o =>
+                (status == null || o.Status == status)
+                && (createdYear == null || o.CreatedDate.Year == createdYear)
+                && (updatedMonth == null || o.UpdatedDate.Month == updatedMonth)
+                && (productId == null || o.ProductId == productId))
+                .ToList();
+            return orders;
+        }
+
+        public bool BulkDeleteOrdersFilteredBy(OrderStatus? status = null, int? createdYear = null, int? updatedMonth = null, int? productId = null)
+        {
+            using var dbContext = new HomeworkDBContext(_options);
+            dbContext.Order.Where(o =>
+                (status == null || o.Status == status)
+                && (createdYear == null || o.CreatedDate.Year == createdYear)
+                && (updatedMonth == null || o.UpdatedDate.Month == updatedMonth)
+                && (productId == null || o.ProductId == productId))
+                .Delete(x => x.BatchSize = 1000);
+            return true;
         }
     }
 }

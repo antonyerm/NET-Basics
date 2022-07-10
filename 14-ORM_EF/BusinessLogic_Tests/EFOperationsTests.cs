@@ -32,15 +32,14 @@ namespace BusinessLogic_Tests
             // delete test
             TestScenario_DeleteProduct_ProductNumberProvided_ProductIsDeleted();
 
-            /*
             // fetch all products test
             TestScenario_FetchAllProducts_AllProductsAreObtained();
-
+            
             // fetch orders filtered by status
             TestScenario_FetchOrdersFilteredByStatus_FilteredOrdersAreObtained();
-
+            
             // bulk delete orders filtered by created date
-            TestScenario_BulkDeleteOrdersFilteredByCreatedYear_FilteredOrdersAreDeleted(); */
+            TestScenario_BulkDeleteOrdersFilteredByCreatedYear_FilteredOrdersAreDeleted();
         }
 
         private void TestScenario_InsertProduct_ProductModelProvided_ProductCreated()
@@ -184,40 +183,40 @@ namespace BusinessLogic_Tests
             Assert.IsTrue(isOrderDeleted);
         }
 
-        //private void TestScenario_FetchAllProducts_AllProductsAreObtained()
-        //{
-        //    // arrange
+        private void TestScenario_FetchAllProducts_AllProductsAreObtained()
+        {
+            // arrange
 
-        //    // act
-        //    var allProducts = _operations.FetchAllProducts();
+            // act
+            var allProducts = _operations.FetchAllProducts();
 
-        //    // assert
-        //    Assert.IsTrue(allProducts.Count > 1);
-        //}
+            // assert
+            Assert.IsTrue(allProducts.Count > 1);
+        }
 
-        //private void TestScenario_FetchOrdersFilteredByStatus_FilteredOrdersAreObtained()
-        //{
-        //    // arrange
-        //    var requiredStatus = OrderStatus.NotStarted; // normally this is Order with Id = 1
+        private void TestScenario_FetchOrdersFilteredByStatus_FilteredOrdersAreObtained()
+        {
+            // arrange
+            var requiredStatus = OrderStatus.NotStarted; // normally this is Order with Id = 1
 
-        //    // act
-        //    var filteredOrders = _operations.FetchOrdersFilteredBy(status: requiredStatus);
+            // act
+            var filteredOrders = _operations.FetchOrdersFilteredBy(status: requiredStatus);
 
-        //    // assert
-        //    Assert.IsTrue(filteredOrders.Any() && filteredOrders.All(o => o.Status == requiredStatus));
-        //}
+            // assert
+            Assert.IsTrue(filteredOrders.Any() && filteredOrders.All(o => o.Status == requiredStatus));
+        }
 
-        //private void TestScenario_BulkDeleteOrdersFilteredByCreatedYear_FilteredOrdersAreDeleted()
-        //{
-        //    // arrange
-        //    var createdYear = 2012; // normally this is Order with Id = 1
+        private void TestScenario_BulkDeleteOrdersFilteredByCreatedYear_FilteredOrdersAreDeleted()
+        {
+            // arrange
+            var createdYear = 2012; // normally this is Order with Id = 1
 
-        //    // act
-        //    var deleteStatusOK = _operations.BulkDeleteOrdersFilteredBy(createdYear: createdYear);
-        //    var isOrderDeleted = !_operations.FetchOrdersFilteredBy(createdYear: createdYear).Any();
+            // act
+            var deleteStatusOK = _operations.BulkDeleteOrdersFilteredBy(createdYear: createdYear);
+            var isOrderDeleted = !_operations.FetchOrdersFilteredBy(createdYear: createdYear).Any();
 
-        //    // assert
-        //    Assert.IsTrue(isOrderDeleted);
-        //}
+            // assert
+            Assert.IsTrue(deleteStatusOK && isOrderDeleted);
+        }
     }
 }
