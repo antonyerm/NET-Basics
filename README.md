@@ -48,3 +48,7 @@ Implement CRUD operations on tables in connected and disconnected mode using ADO
 Implement CRUD operations and some special DML-commands on tables using Dapper.
 ### 14-ORM_EF
 Implement CRUD operations and some special DML-commands on tables using Entity Framework Core.
+----------
+## Optional modules
+### 15 HTTP Fundamentals
+Implement HTTP Listener and HTTP Client and make them send data in response body, header and through a cookie.
