@@ -52,3 +52,5 @@ Implement CRUD operations and some special DML-commands on tables using Entity F
 ## Optional modules
 ### 15 HTTP Fundamentals
 Implement HTTP Listener and HTTP Client and make them send data in response body, header and through a cookie.
+### 16 JS Basics
+Implement some basic string and array operations in JS.
